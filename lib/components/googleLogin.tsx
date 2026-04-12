@@ -1,8 +1,8 @@
 "use client"
 
-import { authClient } from "@/app/(Auth)/auth-client";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
+import { authClient } from "../auth-client";
 
 type GoogleText = {
     name: string;

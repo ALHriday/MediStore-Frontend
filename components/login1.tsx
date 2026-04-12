@@ -1,8 +1,8 @@
 "use client"
 
-import { authClient } from "@/app/(Auth)/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import GoogleLogin from "@/lib/components/googleLogin";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -47,15 +47,21 @@ const Login1 = ({
 
   const handleSignInWithEmailAndPass = async (e: React.FormEvent) => {
     e.preventDefault();
+
     try {
       const { data } = await authClient.signIn.email({
         email,
         password
       });
 
+      if (!data?.user?.emailVerified) {
+        return toast.error('Email not verified!');
+      }
+
       if (!data?.user) {
         return toast.error('Wrong Email or Password!');
       }
+
       toast.success('Login Successful.');
       router.push('/');
       router.refresh();
@@ -73,18 +79,9 @@ const Login1 = ({
         />
         {/* Logo */}
         <div className="flex flex-col gap-4 items-center lg:justify-start">
-          {/* <Link href={logo.url}>
-            <Image
-              width={200}
-              height={80}
-              src={logo.src}
-              alt={logo.alt}
-              title={logo.title}
-              className="dark:invert"
-            />
-          </Link> */}
+
           <div className="flex w-full max-w-sm min-w-sm flex-col items-center gap-y-4 rounded-md border border-muted bg-background px-6 py-8 shadow-md">
-            {heading && <h1 className="text-xl font-semibold">{heading}</h1>}
+            {heading && <h1 className="text-2xl font-semibold">{heading}</h1>}
             <form className="w-full flex flex-col gap-8" onSubmit={(e) => handleSignInWithEmailAndPass(e)}>
               <Input
                 type="email"

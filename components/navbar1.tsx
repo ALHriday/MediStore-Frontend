@@ -25,10 +25,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { cookies } from "next/headers";
 import LogoutUser from "@/lib/components/logoutUser";
 import Image from "next/image";
-// import { authClient } from "@/app/(Auth)/auth-client";
 import { getSession } from "@/lib/getSession";
 import Link from "next/link";
 
@@ -69,9 +67,9 @@ interface Navbar1Props {
 const Navbar1 = async ({
   logo = {
     url: "/",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
+    src: "https://img.icons8.com/dusk/64/pills.png",
     alt: "logo",
-    title: "Shadcnblocks.com",
+    title: "MediStore",
   },
   menu = [
     { title: "Home", url: "/" },
@@ -112,7 +110,7 @@ const Navbar1 = async ({
             <a href={logo.url} className="flex items-center gap-2">
               <img
                 src={logo.src}
-                className="max-h-8 dark:invert"
+                className="max-h-8 max-w-8 dark:invert"
                 alt={logo.alt}
               />
               <span className="text-lg font-semibold tracking-tighter">
@@ -138,7 +136,7 @@ const Navbar1 = async ({
 
             <div>
               <Link href={`/profile`}>
-                <img className="rounded-full"
+                <img className="rounded-full h-10 w-10"
                   src={user?.image || 'https://img.icons8.com/?size=100&id=z-JBA_KtSkxG&format=png&color=000000'}
                   alt={user?.name}
                   width={40}
