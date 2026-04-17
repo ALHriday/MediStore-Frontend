@@ -1,11 +1,10 @@
-import Link from "next/link";
+import Carrosel from "@/lib/components/Carousel";
 
 export default function Home() {
   return (
     <div>
       <main>
-        <h1>This is Home Page</h1>
-        <Link className="btn px-4 py-2 bg-white text-black rounded-md font-bold" href={`/medicines`}>Medicines</Link>
+        <Carrosel />
       </main>
     </div>
   );

@@ -1,9 +1,8 @@
-import Medicines from "@/lib/components/medicines/medicines";
 
 const page = () => {
     return (
         <div>
-            <Medicines />
+            This is Dashboard
         </div>
     );
 };

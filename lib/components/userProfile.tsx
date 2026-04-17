@@ -1,13 +1,13 @@
 "use client"
 
-import { UserData } from "@/components/settings-profile1";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { userService } from "@/users/users.service";
+import { userService } from "@/modules/users/users.service";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { UserData } from "../types/types";
 
 
 const UserProfile = ({ userData }: { userData: UserData }) => {

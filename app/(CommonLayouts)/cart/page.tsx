@@ -1,9 +1,9 @@
-import Medicines from "@/lib/components/medicines/medicines";
+import Cart from "@/lib/components/cart/Cart";
 
 const page = () => {
     return (
         <div>
-            <Medicines />
+            <Cart />
         </div>
     );
 };

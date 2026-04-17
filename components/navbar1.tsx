@@ -74,21 +74,13 @@ const Navbar1 = async ({
   menu = [
     { title: "Home", url: "/" },
     {
-      title: "Products",
-      url: "/products",
+      title: "Medicines",
+      url: "/medicines",
     },
     {
       title: "Resources",
       url: "#",
-    },
-    {
-      title: "Pricing",
-      url: "#",
-    },
-    {
-      title: "Blog",
-      url: "#",
-    },
+    }
   ],
   auth = {
     login: { title: "Login", url: "/login" },
@@ -101,7 +93,7 @@ const Navbar1 = async ({
   const { user } = await getSession();
 
   return (
-    <section className={cn("py-4", className)}>
+    <section className={cn("p-4 shadow-sm sticky top-0 bg-slate-50 z-10", className)}>
       <div className="container justify-between items-center">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
@@ -119,14 +111,17 @@ const Navbar1 = async ({
             </a>
             <div className="flex items-center">
               <NavigationMenu>
-                <NavigationMenuList>
+                <NavigationMenuList className='flex gap-2'>
                   {menu.map((item) => renderMenuItem(item))}
                 </NavigationMenuList>
               </NavigationMenu>
             </div>
           </div>
-          <div className="flex gap-2 justify-end items-center">
 
+          <div className="flex gap-2 justify-end items-center">
+            <Link href={`/cart`} className="border-2 rounded-md p-1">
+              <Image src={`/cart.png`} alt="cart-logo" width={28} height={28} />
+            </Link>
             {user ? <LogoutUser /> :
               <>
                 <Button size="sm" render={<a href={auth.signup.url} />} nativeButton={false}>{auth.signup.title}</Button>
@@ -179,7 +174,11 @@ const Navbar1 = async ({
                   >
                     {menu.map((item) => renderMobileMenuItem(item))}
                   </Accordion>
-
+                  <div>
+                    <Link href={`/cart`}>
+                      <Button className='bg-slate-50 text-black'>Cart</Button>
+                    </Link>
+                  </div>
                   <div className="flex flex-col gap-3">
                     {user ? <LogoutUser /> :
                       <>

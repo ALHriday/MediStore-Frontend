@@ -1,8 +1,9 @@
+import Orders from "@/lib/components/orders/Orders";
 
 const page = () => {
     return (
         <div>
-            <h1>This is Products Route</h1>
+            <Orders />
         </div>
     );
 };

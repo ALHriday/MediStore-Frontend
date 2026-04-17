@@ -180,20 +180,20 @@ const CONTACT_LINKS: ContactLinks = {
 };
 
 const EcommerceFooter1 = ({
-  newsletter = NEWSLETTER_DATA,
-  footerLinks = FOOTER_LINKS,
-  contactLinks = CONTACT_LINKS,
+  // newsletter = NEWSLETTER_DATA,
+  // footerLinks = FOOTER_LINKS,
+  // contactLinks = CONTACT_LINKS,
   className,
 }: EcommerceFooter1Props) => {
   return (
     <section className={cn("pt-8 pb-8 xl:pt-12", className)}>
       <div className="container space-y-10">
         <div className="grid grid-cols-1 gap-x-16 gap-y-8 md:grid-cols-2 xl:grid-cols-4">
-          <div>
+          {/* <div>
             <NewsletterSection {...newsletter} />
           </div>
           <FooterLinksSection sections={footerLinks} />
-          <ContactSection links={contactLinks} />
+          <ContactSection links={contactLinks} /> */}
         </div>
       </div>
     </section>

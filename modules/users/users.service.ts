@@ -24,7 +24,7 @@ export const userService = {
                 method: "POST",
                 // credentials: "include",
                 body: data
-            });
+            }) || {};
 
             const result = await res.json();
 
