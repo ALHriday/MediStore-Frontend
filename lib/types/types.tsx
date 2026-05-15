@@ -4,6 +4,14 @@ export interface UserData {
     phone: string;
     image: string;
 }
+export interface User {
+    id: string;
+    name: string;
+    phone: string;
+    image: string;
+    role: Role;
+    status: string;
+}
 
 
 export interface Medicine {
@@ -43,4 +51,41 @@ export interface Item {
     price: number
     quantity: number
     title: string;
+}
+
+export interface CartData {
+    id: string;
+}
+
+export interface CartItemsData {
+    id: string;
+    title: string;
+    price: number;
+    quantity: number;
+}
+export interface Order {
+    id: string;
+    title: string;
+    totalAmount: number;
+    quantity: number;
+    name: string;
+    orderItems: Item[];
+    phone: string;
+    shippingAddress: string;
+    userId?: string;
+    createdAt: Date;
+}
+
+export enum Role {
+    ADMIN = "ADMIN",
+    SELLER = "SELLER",
+    CUSTOMER = "CUSTOMER",
+}
+
+
+export const getErrorMessage = (error: unknown) => {
+    if (error instanceof Error) {
+        return error.message;
+    }
+    return String(error) || "Something went wrong!";
 }

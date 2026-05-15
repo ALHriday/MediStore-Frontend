@@ -28,12 +28,12 @@ interface Login1Props {
 
 const Login1 = ({
   heading = "Login",
-  logo = {
-    url: "/login",
-    src: "/mediStore.png",
-    alt: "logo",
-    title: "MediStore",
-  },
+  // logo = {
+  //   url: "/login",
+  //   src: "/mediStore.png",
+  //   alt: "logo",
+  //   title: "MediStore",
+  // },
   buttonText = "Login",
   signupText = "Need an account?",
   signupUrl = "/register",
@@ -61,8 +61,10 @@ const Login1 = ({
       if (!data?.user) {
         return toast.error('Wrong Email or Password!');
       }
+      if (data.user) {
+        toast.success('Login Successful.');
+      }
 
-      toast.success('Login Successful.');
       router.push('/');
       router.refresh();
     } catch (err) {

@@ -10,7 +10,7 @@ export const orderService = {
             });
 
             const data = await res.json();
-            return { result: data?.data, error: null };
+            return { result: data?.data ?? [], error: null };
         } catch {
             return { result: null, err: { message: 'something went wrong!' } }
         }

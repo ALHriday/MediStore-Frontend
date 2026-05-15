@@ -215,7 +215,7 @@ const NewsletterSection = ({ title, description }: NewsletterFormProps) => {
   });
 
   const onSubmit = (data: newsletterFormType) => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (

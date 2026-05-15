@@ -1,9 +1,9 @@
-import Cart from "@/lib/components/cart/Cart";
+import DynamicCart from "@/lib/components/cart/DynamicCart";
 
 const page = () => {
     return (
         <div>
-            <Cart />
+            <DynamicCart />
         </div>
     );
 };

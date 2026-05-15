@@ -1,5 +1,3 @@
-"use client"
-
 import { medicinesService } from "@/modules/medicines/medicines.service";
 import { useQuery } from "@tanstack/react-query";
 import { Categories } from "../types/types";

@@ -15,12 +15,10 @@ const googleLogin = (text: GoogleText) => {
                 provider: "google",
                 callbackURL: `${process.env.NEXT_PUBLIC_APP_URL!}`,
             })
-            toast.success("SignIn successful.");
         } catch (err) {
             toast.error("SignIn unsuccessful. Try again later!");
             return err;
         }
-
     }
     return (
         <Button onClick={() => handleSignInWithGoogle()} type="submit" className="w-full">

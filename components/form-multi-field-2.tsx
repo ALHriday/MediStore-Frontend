@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { email, z } from "zod";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -47,10 +47,6 @@ const Register = () => {
     const fullName = `${values.firstName.trim()} ${values.lastName.trim()}`;
     const email = values.email.trim();
     const password = values.password.trim();
-
-    console.log({ name: fullName },
-      email,
-      password);
 
     try {
       const { data } = await authClient.signUp.email({

@@ -1,18 +1,16 @@
+"use client"
 
-import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
-
+import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
@@ -27,8 +25,8 @@ import {
 } from "@/components/ui/sheet";
 import LogoutUser from "@/lib/components/logoutUser";
 import Image from "next/image";
-import { getSession } from "@/lib/getSession";
 import Link from "next/link";
+import { Role, User } from "@/lib/types/types";
 
 interface MenuItem {
   title: string;
@@ -62,9 +60,10 @@ interface Navbar1Props {
       url: string;
     };
   };
+  userData: User;
 }
 
-const Navbar1 = async ({
+const Navbar1 = ({
   logo = {
     url: "/",
     src: "https://img.icons8.com/dusk/64/pills.png",
@@ -77,10 +76,6 @@ const Navbar1 = async ({
       title: "Medicines",
       url: "/medicines",
     },
-    {
-      title: "Resources",
-      url: "#",
-    }
   ],
   auth = {
     login: { title: "Login", url: "/login" },
@@ -88,9 +83,8 @@ const Navbar1 = async ({
     logout: { title: "logout", url: "/" },
   },
   className,
+  userData,
 }: Navbar1Props) => {
-
-  const { user } = await getSession();
 
   return (
     <section className={cn("p-4 shadow-sm sticky top-0 bg-slate-50 z-10", className)}>
@@ -100,10 +94,13 @@ const Navbar1 = async ({
           <div className="flex items-center gap-6">
             {/* Logo */}
             <a href={logo.url} className="flex items-center gap-2">
-              <img
+              <Image
                 src={logo.src}
                 className="max-h-8 max-w-8 dark:invert"
+                width={32}
+                height={32}
                 alt={logo.alt}
+                priority
               />
               <span className="text-lg font-semibold tracking-tighter">
                 {logo.title}
@@ -114,15 +111,23 @@ const Navbar1 = async ({
                 <NavigationMenuList className='flex gap-2'>
                   {menu.map((item) => renderMenuItem(item))}
                 </NavigationMenuList>
+                {userData?.role === Role.ADMIN &&
+                  (<Link className="ml-2 px-4 py-2 bg-white rounded-md hover:bg-gray-100 border" href={`/dashboard`}>
+                    <NavigationMenuList>Dashboard</NavigationMenuList>
+                  </Link>)}
+                {userData?.role === Role.SELLER &&
+                  (<Link className="ml-2 px-4 py-2 bg-white rounded-md hover:bg-gray-100 border" href={`/dashboard`}>
+                    <NavigationMenuList>Dashboard</NavigationMenuList>
+                  </Link>)}
               </NavigationMenu>
             </div>
           </div>
 
           <div className="flex gap-2 justify-end items-center">
-            <Link href={`/cart`} className="border-2 rounded-md p-1">
-              <Image src={`/cart.png`} alt="cart-logo" width={28} height={28} />
+            <Link href={`/cart`} className="mr-2 border-slate-800 border-2 shadow-md rounded-md p-1">
+              <Image src={`/cart.png`} alt="cart-logo" width={24} height={24} />
             </Link>
-            {user ? <LogoutUser /> :
+            {userData ? <LogoutUser /> :
               <>
                 <Button size="sm" render={<a href={auth.signup.url} />} nativeButton={false}>{auth.signup.title}</Button>
                 <Button variant="outline" size="sm" render={<a href={auth.login.url} />} nativeButton={false}>{auth.login.title}</Button>
@@ -130,13 +135,14 @@ const Navbar1 = async ({
             }
 
             <div>
-              <Link href={`/profile`}>
-                <img className="rounded-full h-10 w-10"
-                  src={user?.image || 'https://img.icons8.com/?size=100&id=z-JBA_KtSkxG&format=png&color=000000'}
-                  alt={user?.name}
+              <Link href={userData ? `/profile` : '/'}>
+                <Image className="rounded-full h-10 w-10"
+                  src={userData?.image || 'https://img.icons8.com/?size=100&id=z-JBA_KtSkxG&format=png&color=000000'}
+                  alt={userData?.name || 'Guest'}
                   width={40}
                   height={40}
-                  title={user?.name}
+                  title={userData?.name}
+                  priority
                 />
               </Link>
             </div>
@@ -148,48 +154,59 @@ const Navbar1 = async ({
           <div className="flex items-center justify-between">
             {/* Logo */}
             <a href={logo.url} className="flex items-center gap-2">
-              <img
+              <Image
+                width={32}
+                height={32}
+                priority
                 src={logo.src}
                 className="max-h-8 dark:invert"
                 alt={logo.alt}
               />
             </a>
-            <Sheet>
-              <SheetTrigger render={<Button variant="outline" size="icon" />}><Menu className="size-4" /></SheetTrigger>
-              <SheetContent className="overflow-y-auto">
-                <SheetHeader>
-                  <SheetTitle>
-                    <a href={logo.url} className="flex items-center gap-2">
-                      <img
-                        src={logo.src}
-                        className="max-h-8 dark:invert"
-                        alt={logo.alt}
-                      />
-                    </a>
-                  </SheetTitle>
-                </SheetHeader>
-                <div className="flex flex-col gap-6 p-4">
-                  <Accordion
-                    className="flex w-full flex-col gap-4"
-                  >
-                    {menu.map((item) => renderMobileMenuItem(item))}
-                  </Accordion>
-                  <div>
-                    <Link href={`/cart`}>
-                      <Button className='bg-slate-50 text-black'>Cart</Button>
-                    </Link>
+            <div className="flex gap-4">
+
+              <Link href={`/cart`} className="border-slate-800 border-2 shadow-md rounded-md p-1">
+                <Image src={`/cart.png`} alt="cart-logo" width={24} height={24} />
+              </Link>
+
+              <Sheet>
+                <SheetTrigger render={<Button variant="outline" size="icon" />}><Menu className="size-4" /></SheetTrigger>
+                <SheetContent className="overflow-y-auto">
+                  <SheetHeader>
+                    <SheetTitle className='flex gap-2'>
+                      <div className="flex gap-2 font-bold items-center">
+                        <Link href={userData ? `/profile` : '/'}>
+                          <Image className="rounded-full h-10 w-10"
+                            src={userData?.image || 'https://img.icons8.com/?size=100&id=z-JBA_KtSkxG&format=png&color=000000'}
+                            alt={userData?.name || 'Guest'}
+                            width={40}
+                            height={40}
+                            title={`Click here to update your profile`}
+                            priority
+                          />
+                        </Link>
+                        <h1>{userData?.name ? `Hello, ${userData?.name}.` : 'Guest.'}</h1>
+                      </div>
+                    </SheetTitle>
+                  </SheetHeader>
+                  <div className="flex flex-col gap-6 p-4">
+                    <Accordion
+                      className="flex w-full flex-col gap-4"
+                    >
+                      {menu.map((item) => renderMobileMenuItem(item))}
+                    </Accordion>
+                    <div className="flex flex-col gap-3">
+                      {userData ? <LogoutUser /> :
+                        <>
+                          <Button variant="outline" render={<a href={auth.login.url} />} nativeButton={false}>{auth.login.title}</Button>
+                          <Button render={<a href={auth.signup.url} />} nativeButton={false}>{auth.signup.title}</Button>
+                        </>
+                      }
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-3">
-                    {user ? <LogoutUser /> :
-                      <>
-                        <Button variant="outline" render={<a href={auth.login.url} />} nativeButton={false}>{auth.login.title}</Button>
-                        <Button render={<a href={auth.signup.url} />} nativeButton={false}>{auth.signup.title}</Button>
-                      </>
-                    }
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </div>
@@ -210,7 +227,7 @@ const renderMenuItem = (item: MenuItem) => {
     <NavigationMenuItem key={item.title}>
       <NavigationMenuLink
         href={item.url}
-        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
+        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground border border-teal-400"
       >
         {item.title}
       </NavigationMenuLink>

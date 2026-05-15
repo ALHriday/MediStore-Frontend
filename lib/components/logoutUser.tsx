@@ -1,6 +1,5 @@
 "use client"
 
-// import { authClient } from "@/app/(Auth)/auth-client";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";

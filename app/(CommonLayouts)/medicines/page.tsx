@@ -1,3 +1,5 @@
+"use client"
+
 import Medicines from "@/lib/components/medicines/medicines";
 
 const page = () => {

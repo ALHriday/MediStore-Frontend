@@ -1,11 +1,9 @@
-"use client"
-
 import { orderService } from "@/modules/orders/order.service";
 import { useQuery } from "@tanstack/react-query";
 
 
 const useOrdersData = () => {
-    const { data, refetch, isLoading } = useQuery({
+    const { data } = useQuery({
         queryKey: ['ordersData'],
         queryFn: async () => {
             const data = await orderService.getOrderData();
@@ -15,7 +13,7 @@ const useOrdersData = () => {
         staleTime: 2000,
         refetchOnWindowFocus: true,
     });
-    return { data, refetch, isLoading };
+    return { data };
 };
 
 export default useOrdersData;

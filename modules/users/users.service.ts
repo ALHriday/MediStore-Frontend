@@ -1,7 +1,6 @@
 
 const url = new URL(process.env.NEXT_PUBLIC_API_URL!).toString();
 
-
 export const userService = {
     updateUserProfile: async (data: FormData) => {
         try {
@@ -10,7 +9,9 @@ export const userService = {
                 credentials: "include",
                 body: data
             });
-
+            if (!res.ok) {
+                throw new Error('Internal Server Error!');
+            }
             const result = await res.json();
 
             return { result: result, error: null };
@@ -22,15 +23,16 @@ export const userService = {
         try {
             const res = await fetch(`${url}api/auth/signup`, {
                 method: "POST",
-                // credentials: "include",
                 body: data
-            }) || {};
-
+            });
+            if (!res.ok) {
+                throw new Error('Internal Server Error!');
+            }
             const result = await res.json();
 
             return { result: result, error: null };
         } catch {
             return { result: null, err: { message: 'something went wrong!' } }
         }
-    }
+    },
 }

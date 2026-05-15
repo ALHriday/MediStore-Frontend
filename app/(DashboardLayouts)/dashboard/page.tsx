@@ -1,8 +1,11 @@
+import StatsCard from "@/lib/components/StatsCard";
+import { getSession } from "@/lib/getSession";
 
-const page = () => {
+const page = async () => {
+    const { user } = await getSession();
     return (
         <div>
-            This is Dashboard
+            <StatsCard userRole={user.role} />
         </div>
     );
 };
