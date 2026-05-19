@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 
 
 const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
-    const { user } = await getSession();
+    const session = await getSession();
+    const user = session?.user;
 
     if (user.role !== Role.ADMIN) {
         redirect('/');

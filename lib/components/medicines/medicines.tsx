@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import Pagination from "../pagination/pagination";
 import { SearchIcon } from "lucide-react";
 
+
 const Medicines = () => {
     const [search, setSearch] = useState<string>('');
     const [m, setM] = useState<string>('');
@@ -26,6 +27,10 @@ const Medicines = () => {
     const [skip, setSkip] = useState<number>(0);
 
     const { data, isLoading } = useMedicinesData({ search, m, sort, categoryId, skip });
+
+    const medicines = data?.data || [];
+
+
     const { categories, isLoading: loadingCategory } = useCategoryData();
     const { cartItems, setCartItems } = useCart();
     const currentPath = usePathname();
@@ -76,7 +81,7 @@ const Medicines = () => {
                 </div>
                 {search &&
                     <div className="w-full flex flex-col justify-start items-start flex-wrap gap-4 absolute top-20 right-0 z-30 bg-slate-50 p-2 md:px-4 md:py-6 min-h-screen border rounded-md">
-                        {data && data?.map((medicine: Medicine) =>
+                        {medicines && medicines.map((medicine: Medicine) =>
                             <div key={medicine.id} className="p-2 rounded-md shadow-md flex justify-between gap-2 min-w-75 md:w-100">
                                 <Link className="flex gap-4 w-full" href={`/medicines/${medicine?.id}`}>
                                     <div className="relative w-3/12 md:w-4/12">
@@ -107,7 +112,7 @@ const Medicines = () => {
 
 
             <div className="flex flex-col gap-4 relative">
-                <div>
+                <div className="w-auto h-auto">
                     {currentPath === '/' && <Carrousel />}
                 </div>
                 <div>
@@ -118,12 +123,12 @@ const Medicines = () => {
                                 <button className="cursor-pointer text-sm md:text-md font-medium md:font-bold"></button>
                             </div>)}
                         </div>) :
-                            (<div className="flex gap-2 overflow-auto snap-mandatory rounded-md shadow-sm p-2 mx-2">
+                            (<div className="flex gap-2  overflow-x-auto rounded-md shadow-sm p-2 mx-2">
                                 <div className="rounded-md p-2 shadow-sm flex items-center bg-[#DCFDDC] border-2 border-slate-400">
                                     <button className="cursor-pointer text-sm md:text-md font-medium md:font-bold px-4 " onClick={() => setCategoryId('')}>All</button>
                                 </div>
                                 {categories?.map((c: Category) => <div className={`${categoryId === c.id ? "bg-slate-100 border-2 border-slate-400" : ''} rounded-md p-2 border shadow-sm flex items-center`} key={c?.id}>
-                                    <button className={`cursor-pointer text-sm md:text-md font-medium md:font-bold`} onClick={() => setCategoryId(c.id)}>{c?.name}</button>
+                                    <button className={`w-full cursor-pointer text-sm md:text-md font-medium md:font-bold`} onClick={() => setCategoryId(c.id)}>{c?.name}</button>
                                 </div>)}
                             </div>)
                         }
@@ -147,25 +152,28 @@ const Medicines = () => {
                         </div>}
 
                     <div className="flex justify-center md:justify-start md:items-center flex-wrap gap-4 mb-6">
-                        {data && data?.map((medicine: Medicine) =>
+                        {medicines && medicines.map((medicine: Medicine) =>
                             <div key={medicine.id} className="w-44 md:w-56 p-2 rounded-md gap-2 shadow-md flex flex-col justify-between">
                                 <Link href={`/medicines/${medicine.id}`}>
-                                    <Image
-                                        className="rounded-md"
-                                        src={medicine?.image}
-                                        alt={medicine?.title}
-                                        width={200}
-                                        height={200}
-                                    />
+                                    <div className="relative w-full h-40 overflow-hidden rounded-md">
+                                        <Image
+                                            className="object-cover"
+                                            src={medicine?.image}
+                                            alt={medicine?.title}
+                                            fill
+                                            sizes="(max-width: 768px) 176px, 224px"
+                                            priority
+                                        />
+                                    </div>
 
-                                    <h2 className="text-sm md:text-md font-bold mt-2">{medicine?.title}</h2>
-                                    <h3 className="text-gray-900 mt-1 text-[12px] md:text-md">{medicine?.manufacturer}</h3>
+                                    <h2 className="text-sm md:text-md font-bold mt-2 line-clamp-1">{medicine.title}</h2>
+                                    <h3 className="text-gray-900 mt-1 text-[12px] md:text-md line-clamp-1">{medicine.manufacturer}</h3>
 
                                 </Link>
                                 <div className="flex flex-col gap-1">
                                     <div className="flex justify-between">
-                                        <p className="font-semibold">${medicine?.price}</p>
-                                        <p>{medicine?.stock}</p>
+                                        <p className="font-semibold">${medicine.price}</p>
+                                        <p>{medicine.stock}</p>
                                     </div>
                                     <Button onClick={() => handleAddToCart(medicine as Medicine)} className='w-full'>Add to cart</Button>
                                 </div>

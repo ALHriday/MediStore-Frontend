@@ -112,11 +112,11 @@ const Navbar1 = ({
                   {menu.map((item) => renderMenuItem(item))}
                 </NavigationMenuList>
                 {userData?.role === Role.ADMIN &&
-                  (<Link className="ml-2 px-4 py-2 bg-white rounded-md hover:bg-gray-100 border" href={`/dashboard`}>
+                  (<Link className="ml-2 px-4 py-2 bg-white rounded-md hover:bg-gray-100 border text-sm font-medium" href={`/dashboard`}>
                     <NavigationMenuList>Dashboard</NavigationMenuList>
                   </Link>)}
                 {userData?.role === Role.SELLER &&
-                  (<Link className="ml-2 px-4 py-2 bg-white rounded-md hover:bg-gray-100 border" href={`/dashboard`}>
+                  (<Link className="ml-2 px-4 py-2 bg-white rounded-md hover:bg-gray-100 border text-sm font-medium" href={`/dashboard`}>
                     <NavigationMenuList>Dashboard</NavigationMenuList>
                   </Link>)}
               </NavigationMenu>
@@ -124,7 +124,7 @@ const Navbar1 = ({
           </div>
 
           <div className="flex gap-2 justify-end items-center">
-            <Link href={`/cart`} className="mr-2 border-slate-800 border-2 shadow-md rounded-md p-1">
+            <Link href={`/cart`} className="transition mr-2 px-2 py-1 bg-white rounded-md hover:bg-gray-100 border-2 text-sm font-bold border-gray-500 hover:border-gray-700">
               <Image src={`/cart.png`} alt="cart-logo" width={24} height={24} />
             </Link>
             {userData ? <LogoutUser /> :
@@ -227,7 +227,7 @@ const renderMenuItem = (item: MenuItem) => {
     <NavigationMenuItem key={item.title}>
       <NavigationMenuLink
         href={item.url}
-        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground border border-teal-400"
+        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground border"
       >
         {item.title}
       </NavigationMenuLink>

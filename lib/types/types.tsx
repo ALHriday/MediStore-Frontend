@@ -25,11 +25,7 @@ export interface Medicine {
 }
 
 export interface Categories {
-    category: {
-        id: string;
-        name: string;
-        createdAt: Date;
-    };
+    category: Category;
 }
 
 export interface Category {

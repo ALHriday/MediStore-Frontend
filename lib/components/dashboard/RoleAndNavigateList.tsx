@@ -7,10 +7,6 @@ const adminRoutelists = [
         link: "/dashboard"
     },
     {
-        title: "Ⓜ️ Dashboard",
-        link: "/dashboard/admin"
-    },
-    {
         title: "Ⓜ️ Manage users",
         link: "/dashboard/admin/manage-users"
     },
@@ -22,8 +18,8 @@ const sellerRoutelists = [
         link: "/dashboard"
     },
     {
-        title: "🙍‍♂️ Seller",
-        link: "/dashboard/seller"
+        title: "💊 Medicines",
+        link: "/dashboard/seller/seller-medicine"
     },
     {
         title: "➕ Create Medicine",
@@ -43,10 +39,6 @@ const customerRoutelists = [
     {
         title: "🏡 Statistics",
         link: "/dashboard"
-    },
-    {
-        title: "🙍‍♂️ Customer",
-        link: "/dashboard/customer"
     },
 ];
 

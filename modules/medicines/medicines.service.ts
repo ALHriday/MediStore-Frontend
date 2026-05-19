@@ -1,3 +1,4 @@
+
 const url = new URL(process.env.NEXT_PUBLIC_API_URL!).toString();
 
 export const medicinesService = {
@@ -20,7 +21,7 @@ export const medicinesService = {
             }
             const data = await res.json();
 
-            return { data: data?.data, error: null };
+            return { data, error: null };
         } catch {
             return { result: null, err: { message: 'something went wrong!' } }
         }
@@ -38,9 +39,9 @@ export const medicinesService = {
             return { result: null, err: { message: 'something went wrong!' } }
         }
     },
-    getStats: async () => {
+    getMedicinesCount: async () => {
         try {
-            const res = await fetch(`${url}api/stats`, { credentials: "include" });
+            const res = await fetch(`${url}api/getMedicinesLen`);
             if (!res.ok) {
                 throw new Error(`HTTP error! status ${res.status}`);
             }

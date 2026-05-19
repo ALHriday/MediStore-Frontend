@@ -1,9 +1,10 @@
-import Medicines from "@/lib/components/medicines/medicines";
+import MedicineTable from "@/lib/components/dashboard/MedicineTable";
 
 const page = async () => {
+
     return (
         <div>
-            <Medicines />
+            <MedicineTable />
         </div>
     );
 };

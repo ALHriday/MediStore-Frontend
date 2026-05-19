@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 
 
 const CustomerLayout = async ({ children }: { children: React.ReactNode }) => {
-    const { user } = await getSession();
+    const session = await getSession();
+    const user = session?.user;
 
     if (user.role !== Role.CUSTOMER) {
         redirect('/');

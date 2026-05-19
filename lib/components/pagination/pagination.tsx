@@ -1,15 +1,15 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import useStats from "@/lib/hooks/useStats";
+import useMedicineLen from "@/lib/hooks/useMedicineLen";
 import { Dispatch, SetStateAction } from "react";
 
 const Pagination = ({ skip, setSkip }: { skip: number, setSkip: Dispatch<SetStateAction<number>> }) => {
 
-    const { stats } = useStats();
-    const total = stats?.totalMedicines || 10;
-    const pages = Math.ceil(total / 10);
+    const { totalMedicinesCount } = useMedicineLen();
 
+    const total = totalMedicinesCount?.totalMedicines || 10;
+    const pages = Math.ceil(total / 10);
 
     const handlePrev = () => {
         if (skip > 0) setSkip(skip - 1);

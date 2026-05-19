@@ -1,8 +1,27 @@
+"use client"
+
+import useUsers from "@/lib/hooks/useUsers";
 import { User } from "@/lib/types/types";
 import Image from "next/image";
 import { MdDeleteForever } from "react-icons/md";
+import ModalComponent from "../modal/ModalComponent";
+import { useState } from "react";
+import LoadingComponent from "../LoadingComponent";
 
-const UserTable = ({ users }: { users: User[] }) => {
+const UserTable = () => {
+
+    const [isOpen, setIsOpen] = useState(false);
+    const { users, isLoading } = useUsers();
+
+
+    const handleDelete = () => {
+        // console.log("User Deleted");
+        setIsOpen(false);
+    }
+
+    if (isLoading) {
+        return <LoadingComponent text="Loading users..." />
+    }
 
     return (
         <div className="bg-white p-4 rounded-md shadow-sm border border-slate-200 overflow-hidden">
@@ -39,7 +58,14 @@ const UserTable = ({ users }: { users: User[] }) => {
                             <td className="px-6 py-4">{user?.phone || `N/A`}</td>
                             <td className="px-6 py-4">{user?.role}</td>
                             <td className="px-6 py-4">{user?.status}</td>
-                            <td className="px-6 py-4 text-right"><button className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition"><MdDeleteForever size={20} /></button></td>
+                            <td className="px-6 py-4 text-right"><button onClick={() => setIsOpen(true)} className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition"><MdDeleteForever size={20} /></button>
+                                <ModalComponent
+                                    modalTitle="Delete User!"
+                                    isOpen={isOpen}
+                                    onClose={() => setIsOpen(false)}
+                                    onConfirm={handleDelete}
+                                />
+                            </td>
                         </tr>)}
                     </tbody>
                 </table>

@@ -17,7 +17,6 @@ const useMedicinesData = ({ search, m, sort, categoryId, skip }: Filter) => {
         queryKey: ['medicines', searchValue, m, sort, categoryId, skip],
         queryFn: async () => {
             const data = await medicinesService.getMedicines(searchValue, m, sort, categoryId, skip);
-
             return data?.data ?? [];
         },
         staleTime: 3000,

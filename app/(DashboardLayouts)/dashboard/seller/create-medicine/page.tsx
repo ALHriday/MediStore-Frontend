@@ -1,8 +1,9 @@
+import CreateMedicine from "./CreateMedicine";
 
 const page = () => {
     return (
-        <div>
-            This is create Medicine Route.
+        <div className="p-4">
+            <CreateMedicine />
         </div>
     );
 };

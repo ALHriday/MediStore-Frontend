@@ -2,13 +2,14 @@
 
 import useStats from "../hooks/useStats";
 import { Role } from "../types/types";
+import LoadingComponent from "./LoadingComponent";
 import Statistics from "./Statistics";
 
 const StatsCard = ({ userRole }: { userRole: Role }) => {
 
     const { stats, isLoading } = useStats();
     if (isLoading) {
-        return <div className='text-center py-6 animate-pulse'>Loading Stats...</div>
+        return <LoadingComponent text="Loading Stats..."/>
     }
 
     return (

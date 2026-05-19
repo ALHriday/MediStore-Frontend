@@ -13,7 +13,7 @@ const Carrousel = () => {
             <div className="w-full overflow-hidden rounded-md">
                 <Carousel>
                     <CarouselContent>
-                        <CarouselItem className="h-75 relative">
+                        <CarouselItem className="h-72 w-full relative overflow-hidden">
                             <Image className="object-cover"
                                 src={`/banner2.webp`}
                                 alt='banner'
@@ -22,7 +22,7 @@ const Carrousel = () => {
                                 priority
                             />
                         </CarouselItem>
-                        <CarouselItem className="h-75 relative">
+                        <CarouselItem className="h-72 w-full relative overflow-hidden">
                             <Image className="object-cover"
                                 src={`/banner1.webp`}
                                 alt='banner'
@@ -32,7 +32,7 @@ const Carrousel = () => {
                             />
 
                         </CarouselItem>
-                        <CarouselItem className="h-75 relative">
+                        <CarouselItem className="h-72 w-full relative overflow-hidden">
                             <Image className="object-cover"
                                 src={`/banner3.webp`}
                                 alt='banner'
