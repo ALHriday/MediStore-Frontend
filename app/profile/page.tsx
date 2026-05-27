@@ -6,7 +6,7 @@ const page = async () => {
     const user = session?.user;
     return (
         <div className="flex justify-center items-center p-4 mx-auto">
-            <UserProfile userData={user} />
+            {user && <UserProfile userData={user} />}
         </div>
     );
 };

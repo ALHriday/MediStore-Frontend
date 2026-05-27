@@ -7,7 +7,7 @@ const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
     const session = await getSession();
     const user = session?.user;
 
-    if (user.role !== Role.ADMIN) {
+    if (user?.role !== Role.ADMIN) {
         redirect('/');
     }
 

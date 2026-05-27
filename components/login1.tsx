@@ -63,9 +63,9 @@ const Login1 = ({
       }
       if (data.user) {
         toast.success('Login Successful.');
+        router.push('/');
       }
 
-      router.push('/');
       router.refresh();
     } catch (err) {
       return err;

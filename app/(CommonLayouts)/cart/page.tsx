@@ -1,13 +1,10 @@
+"use client"
+
 import Cart from "@/lib/components/cart/Cart";
-import { getSession } from "@/lib/getSession";
-
-const page = async () => {
-    const session = await getSession();
-    const user = session?.user;
-
+const page = () => {
     return (
         <div>
-            <Cart user={user} />
+            <Cart />
         </div>
     );
 };

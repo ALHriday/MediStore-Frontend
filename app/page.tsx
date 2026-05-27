@@ -2,6 +2,7 @@ import Medicines from "@/lib/components/medicines/medicines";
 import WhyChooseUs from "@/lib/components/whyChooseUs/WhyChooseUs";
 
 export default function Home() {
+
   return (
     <div>
       <main>

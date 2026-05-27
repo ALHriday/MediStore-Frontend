@@ -1,10 +1,10 @@
 import { cookies } from "next/headers";
-import { authClient } from "./auth-client";
 import { redirect } from "next/navigation";
+import { authClient } from "./auth-client";
 
 export const getSession = async () => {
-    const cookieStore = cookies();
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/get-session`, { headers: { Cookie: (await cookieStore).toString() }, cache: "no-store" });
+    const cookieStore = await cookies();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL!}/api/auth/get-session`, { headers: { Cookie: cookieStore.toString() }, cache: "no-store", credentials: 'include' });
 
     if (!res.ok) {
         await authClient.signOut();

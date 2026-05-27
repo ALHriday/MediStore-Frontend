@@ -7,7 +7,7 @@ const SellerLayout = async ({ children }: { children: React.ReactNode }) => {
     const session = await getSession();
     const user = session?.user;
 
-    if (user.role !== Role.SELLER) {
+    if (user?.role !== Role.SELLER) {
         redirect('/');
     }
 

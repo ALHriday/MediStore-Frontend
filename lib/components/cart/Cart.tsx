@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import useCart from "@/lib/hooks/useCart";
-import { getErrorMessage, User } from "@/lib/types/types";
+import useUserSession from "@/lib/hooks/useUserSession";
+import { getErrorMessage } from "@/lib/types/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -17,10 +18,12 @@ type FormValues = {
 
 const url = new URL(process.env.NEXT_PUBLIC_API_URL!).toString();
 
-const Cart = ({ user }: { user: User }) => {
+const Cart = () => {
     const [isLoading, setIsLoading] = useState(false);
     const { cartItems, setCartItems } = useCart();
     const router = useRouter();
+
+    const { user } = useUserSession();
 
     const subTotal = cartItems?.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -30,9 +33,8 @@ const Cart = ({ user }: { user: User }) => {
         setIsLoading(true);
         const { name, phone, shippingAddress, cashOnDelivery } = data || {};
 
-        const orderItems = cartItems?.map((item) => { return { medicineId: item.id, quantity: item.quantity } }) || [];
-
         const userId = user?.id;
+        const orderItems = cartItems?.map((item) => { return { medicineId: item.id, quantity: item.quantity } }) || [];
 
         const orderData = { name, phone, shippingAddress, cashOnDelivery, orderItems, userId };
 
@@ -99,7 +101,7 @@ const Cart = ({ user }: { user: User }) => {
                 <div className="flex justify-between items-center gap-4 py-2 border-b-2 bg-orange-200 px-2">
                     <h1 className="font-bold text-2xl p-2">Your Cart Items</h1>
                     <div>
-                        {cartItems.length ?
+                        {cartItems?.length ?
                             <Button className={`bg-red-500 cursor-pointer`} onClick={handleClearAll}>Clear All</Button>
                             : ''}
                     </div>
@@ -178,7 +180,7 @@ const Cart = ({ user }: { user: User }) => {
 
                     <div className="flex justify-end gap-2">
                         <Button onClick={handleCancel} className={'my-4'}>Cancel</Button>
-                        <Button disabled={cartItems.length ? false : true} type="submit" className={`${isLoading && 'animate-pulse'} my-4`}>{isLoading ? "Placing Order..." : 'Place Order'}</Button>
+                        <Button disabled={cartItems?.length ? false : true} type="submit" className={`${isLoading && 'animate-pulse'} my-4`}>{isLoading ? "Placing Order..." : 'Place Order'}</Button>
                     </div>
                 </form>
             </div>
